@@ -1,21 +1,11 @@
 from flask import Flask, jsonify, request, send_file, Response, after_this_request, render_template
 from yt_dlp import YoutubeDL
-import threading, uuid, re, tempfile, zipfile, shutil, time, json, base64, os
+import threading, uuid, re, tempfile, zipfile, shutil, time, json
 from pathlib import Path
 
 app = Flask(__name__)
 
 jobs = {}
-
-cookies_base64 = os.getenv('COOKIES')
-
-if cookies_base64:
-    cookies_decoded = base64.b64decode(cookies_base64).decode('utf-8')
-
-    with open('cookies.txt', 'w') as f:
-        f.write(cookies_decoded)
-else:
-    raise ValueError("No 'COOKIES' environment variable.")
 
 def is_valid_video_id(video_id):
     return re.match(r'^[a-zA-Z0-9_-]{11}$', video_id) is not None
@@ -77,7 +67,6 @@ def download_job(job_id, video_ids):
                 job['error'] = f"Invalid video ID: {video_id}"
                 return
             ydl_opts = {
-                'cookiefile': 'cookies.txt',
                 'format': format_selector,
                 'outtmpl': str(temp_dir / '%(title)s.%(ext)s'),
                 'merge_output_format': 'mp4',
