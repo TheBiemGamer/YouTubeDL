@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Downloader</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <i
+      class="fas fa-adjust theme-switcher"
+      title="Toggle Theme"
+      onclick="toggleTheme()"
+    ></i>
+    <div class="container">
+      <h1>YouTube Downloader</h1>
+      <div class="form-group">
+        <textarea
+          id="videoUrls"
+          placeholder="Enter YouTube video URLs (one per line)"
+          autofocus
+        ></textarea>
+      </div>
+      <button onclick="downloadVideos()">Download Videos</button>
+
+      <div id="videoList"></div>
+
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p id="progressText"></p>
+
+      <div class="result" id="result"></div>
+      <footer>
+        <a
+          href="https://github.com/TheBiemGamer/WhoIsApi"
+          target="_blank"
+          title="Source Code"
+        >
+          <i class="fa-brands fa-github icon"></i>
+        </a>
+      </footer>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
