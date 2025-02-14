@@ -1,22 +1,3 @@
-import socket
-import dns.resolver
-
-_original_getaddrinfo = socket.getaddrinfo
-
-
-def custom_getaddrinfo(host, port, family=0, socktype=0, proto=0, flags=0):
-    resolver = dns.resolver.Resolver()
-    resolver.nameservers = ["8.8.8.8"]
-    try:
-        answers = resolver.resolve(host, "A")
-        ip = answers[0].to_text()
-        return _original_getaddrinfo(ip, port, family, socktype, proto, flags)
-    except Exception:
-        return _original_getaddrinfo(host, port, family, socktype, proto, flags)
-
-
-socket.getaddrinfo = custom_getaddrinfo
-
 from flask import (
     Flask,
     jsonify,
